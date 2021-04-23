@@ -1,22 +1,27 @@
 import { GetStaticPaths, GetStaticProps } from 'next';
-import { useRouter } from 'next/router';
-import  Link from 'next/Link';
+import Head from "next/head";
+import Link from 'next/link';
 import { api } from '../../services/api';
 import Image from "next/image";
 import { EpisodeType } from '../../types/Episode'
 import { convertDateToISOString, convertDurationToTimeString } from '../../utils/convertions';
 
 import styles from './episode.module.scss';
+import { usePlayer } from '../../contexts/PlayerContexts';
 
 type EpisodeProps = {
   episode : EpisodeType;
 }
 
 export default function Episode( {episode}: EpisodeProps ) {
-  const router = useRouter();
+  
+  const { play } = usePlayer();
 
   return (
     <div className={styles.episode}>
+      <Head>
+        <title>Ep: {episode.title}</title>
+      </Head>
       <div className={styles.thumbnail}>
         <Link href='/'>
           <button type="button">
@@ -31,7 +36,7 @@ export default function Episode( {episode}: EpisodeProps ) {
           alt={episode.title}
           objectFit="cover"
         />
-        <button type="button">
+        <button type="button" onClick={() => play(episode)}>
           <img src="/play.svg" alt="Tocar Episódio"/>
         </button>
       </div>
@@ -53,9 +58,26 @@ export default function Episode( {episode}: EpisodeProps ) {
 
 
 export const getStaticPaths: GetStaticPaths = async () => {
+  const { data } = await api.get('episodes', {
+    params: {
+      _limit: 2,
+      _sort: 'published_at',
+      _order: 'desc'
+    }
+  })
+
+  //construindo as duas primeira paginas
+  const paths = data.map(ep => {
+    return {
+      params: {
+        slug: ep.id
+      }
+    }
+  });
+
   return {
-    paths: [],
-    fallback: 'blocking'
+    paths, 
+    fallback: 'blocking' 
   }
 }
 
