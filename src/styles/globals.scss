@@ -14,9 +14,32 @@
   --purple-300: #9164FA;
   --purple-500: #8257E5;
   --purple-800: #6F48C9;
-
-
 }
+
+
+
+[data-theme='dark'] {
+  --white: rgb(25, 0, 46);
+
+  --gray-50: #1b1b1b;
+  --gray-100: #fcfcfc;
+  --gray-200: #f5f3f3;
+  --gray-500: rgb(233, 233, 233);
+  --gray-800: #ebebeb;
+
+  --green-500: #36ac04;
+
+
+  --purple-100: #4f27ad;
+  --purple-300: #461fa1;
+  --purple-500: #3b1c85;
+  --purple-800: #2c175e;
+}
+
+.hidden {
+  display: none;
+}
+
 
 @media (max-width: 1088px){
   html{
@@ -51,6 +74,9 @@ h1, h2, h3, h4, h5, h6 {
   color: var(--gray-800);
 }
 
+p {
+  margin-bottom: 0;
+}
 
 h1{
   font-size: 2rem;

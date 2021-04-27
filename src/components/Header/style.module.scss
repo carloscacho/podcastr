@@ -6,6 +6,7 @@
   align-items: center;
 
   padding: 2rem 4rem;
+  padding-top: 2.2rem;
 
   border-bottom: 1px solid var(--gray-100);
 
@@ -15,9 +16,34 @@
     border-left: 1px solid var(--gray-100);
   }
 
+  div {
+    margin-left: auto;
+    height: 2.2rem;
+    display: flex;
+    text-align: center;
+    width: 6rem;
+
+  }
+
   span {
-    margin-left:auto;
+    padding: 1rem;
     text-transform: capitalize;
+  }
+
+  button{
+    background: transparent;
+    width: 2rem;
+    height: 2rem;
+    border: 0;
+
+    .openButton {
+      width: 2rem;
+      height: 2rem;
+    }
+    .closeButton {
+      width: 2rem;
+      height: 2rem;
+    }
   }
 }
 

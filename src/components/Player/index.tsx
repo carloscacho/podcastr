@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import React from 'react';
 import { usePlayer } from '../../contexts/PlayerContexts';
+import useWindowDimensions from '../../utils/WindowDimensions';
 import { PlayerControllers } from '../PlayerControllers';
 import styles from './style.module.scss';
 
@@ -20,9 +21,11 @@ export function Player() {
     toggleLoop,
     isShuffling,
     toggleShuffle,
-    clearPlayerState
+    clearPlayerState, 
+    isOpenPlayer
   } = usePlayer();
 
+  const {width} = useWindowDimensions()
   const episode = episodeList[currentEpisodeIndex];
 
   return (

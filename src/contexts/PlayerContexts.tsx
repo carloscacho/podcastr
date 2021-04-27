@@ -13,17 +13,20 @@ export function PayerContextProvider(props: PlayerContextProviderProps) {
   const [isPlaying, setIsPlaying] = useState(false)
   const [isLooping, setIsLooping] = useState(false)
   const [isShuffling, setIsShuffling] = useState(false)
+  const [isOpenPlayer, setIsOpenPlayer] = useState(true)
 
   function play(episode: EpisodeType) {
     setEpisodeList([episode]);
     setCurrentEpisodeIndex(0);
     setIsPlaying(true);
+    setIsOpenPlayer(true);
   }
 
   function playList(list: EpisodeType[], index: number){
     setEpisodeList(list);
     setCurrentEpisodeIndex(index);
     setIsPlaying(true);
+    setIsOpenPlayer(true);
   }
 
   function togglePlay() {
@@ -65,6 +68,18 @@ export function PayerContextProvider(props: PlayerContextProviderProps) {
     setCurrentEpisodeIndex(0)
   }
 
+  function openPlayer() {
+    setIsOpenPlayer(true);
+  }
+
+  function closePlayer() {
+    setIsOpenPlayer(false);
+  }
+
+  function toggleOpenPlay() {
+    setIsOpenPlayer(!isOpenPlayer)
+  }
+
   return (
     <PlayerContexts.Provider value={{ 
       currentEpisodeIndex,
@@ -82,7 +97,11 @@ export function PayerContextProvider(props: PlayerContextProviderProps) {
       toggleLoop,
       isShuffling,
       toggleShuffle,
-      clearPlayerState
+      clearPlayerState,
+      isOpenPlayer,
+      openPlayer,
+      closePlayer,
+      toggleOpenPlay
     }}>
       {props.children}
     </PlayerContexts.Provider>

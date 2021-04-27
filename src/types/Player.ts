@@ -24,5 +24,9 @@ export type PlayerContextsData = {
   hasPrevEpisode: boolean;
   isLooping: boolean;
   isShuffling: boolean;
+  isOpenPlayer: boolean;
+  openPlayer: () => void;
+  closePlayer: () => void;
+  toggleOpenPlay: () => void;
 
 };

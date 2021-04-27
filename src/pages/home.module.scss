@@ -5,16 +5,16 @@
 
   h2 {
     margin-top: 3rem;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1rem;
   }
 }
 
 .latestEps {
   ul{
     list-style: none;
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1.5rem;
+    // display: grid;
+    // grid-template-columns: repeat(2, 1fr);
+    // gap: 1.5rem;
 
     li {
       background: var(--white);
@@ -22,7 +22,7 @@
       padding: 1.25rem;
       border-radius: 1.5rem;
       position: relative;
-
+      margin-top: 1rem;
       display: flex;
 
       img {

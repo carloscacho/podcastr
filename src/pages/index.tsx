@@ -9,6 +9,8 @@ import { convertDateToISOString, convertDurationToTimeString } from "../utils/co
 
 import styles from "./home.module.scss";
 import { usePlayer } from "../contexts/PlayerContexts";
+import { Col, Row } from "react-bootstrap";
+import useWindowDimensions from "../utils/WindowDimensions";
 
 type HomeProps = {
   latestEpisodes: EpisodeType[];
@@ -20,6 +22,7 @@ export default function Home(props: HomeProps) {
   const { latestEpisodes, allEpisodes } = props
   const episodesList = [...latestEpisodes, ...allEpisodes];
   const {playList} = usePlayer();
+  const { width } = useWindowDimensions();
 
  //console.log(props.episodes);
   
@@ -32,32 +35,36 @@ export default function Home(props: HomeProps) {
         <h2>Últimos lançamentos</h2>
 
         <ul>
+          <Row>
           {latestEpisodes.map((episodes, index) => {
             return (
-              <li key={episodes.id}>
-                <Image 
-                  width={192} 
-                  height={192} 
-                  src={episodes.thumbnail} 
-                  alt={episodes.title}
-                  objectFit="cover"
-                />
+              <Col xs={12} md={12} lg={12} xl={6}>
+                <li key={episodes.id}>
+                  <Image 
+                    width={192} 
+                    height={192} 
+                    src={episodes.thumbnail} 
+                    alt={episodes.title}
+                    objectFit="cover"
+                  />
 
-                <div className={styles.epDetails}>
-                  <Link href={`/episode/${episodes.id}`}>
-                    <a>{episodes.title}</a>
-                  </Link>
-                  <p>{episodes.members}</p>
-                  <span>{episodes.publishedAt}</span>
-                  <span>{episodes.durationAtString}</span>
-                </div>
+                  <div className={styles.epDetails}>
+                    <Link href={`/episode/${episodes.id}`}>
+                      <a>{episodes.title}</a>
+                    </Link>
+                    <p>{episodes.members}</p>
+                    <span>{episodes.publishedAt}</span>
+                    <span>{episodes.durationAtString}</span>
+                  </div>
 
-                <button type="button" onClick={() => playList(episodesList, index)}>
-                  <img src="/play-green.svg" alt="tocar o podcast"/>
-                </button>
-              </li>
+                  <button type="button" onClick={() => playList(episodesList, index)}>
+                    <img src="/play-green.svg" alt="tocar o podcast"/>
+                  </button>
+                </li>
+              </Col>
             )
           })}
+          </Row>
         </ul>
 
       </section>
