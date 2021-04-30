@@ -9,7 +9,7 @@
     "server": "json-server server.json -w -d 750 -p 3333"
   },
   "engines": {
-    "node": "14.16.0"
+    "node": "14.16"
   },
   "dependencies": {
     "@react-icons/all-files": "^4.1.0",
