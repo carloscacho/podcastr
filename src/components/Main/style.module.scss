@@ -1,5 +1,6 @@
 
 #main {
+  width: 100vh;
   flex: 1;
   background-color: var(--gray-50);
   margin-right: 26.5rem;
@@ -7,14 +8,37 @@
 }
 
 .openPlayer {
+  // width: 100vh;
+  flex: 1;
   margin-right: 26.5rem;
   transition: margin-right .5s;
   background-color: var(--gray-50);
   z-index: 2;
 }
 .closePlayer {
+  // width: 100vh;
+  flex: 1;
   margin-right: 0;
   background-color: var(--gray-50);
   transition: margin-right .5s;
   z-index: 2;
+}
+
+@media (max-width: 720px) {
+  .openPlayer {
+    // width: 100vh;
+    flex: 1;
+    margin-right: 26.5rem;
+    transition: margin-right .5s;
+    background-color: var(--gray-50);
+    z-index: 2;
+  }
+  .closePlayer {
+    // width: 100vh;
+    flex: 1;
+    margin-right: 0;
+    background-color: var(--gray-50);
+    transition: margin-right .5s;
+    z-index: 2;
+  }
 }

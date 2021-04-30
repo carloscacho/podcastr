@@ -1,5 +1,4 @@
 .playerContainer {
-  width: 26.5rem;
   height: 100vh;
   padding: 3rem  4rem;
   position: fixed;
@@ -7,7 +6,6 @@
   top: 0;
   right: 0;
   transition: 0.5s;
-  z-index: 1;
 
   background-color: var(--purple-500);
   color: #FFF;
@@ -16,6 +14,20 @@
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
+
+  .closeBtn{
+    position: absolute;
+    color: #FFF; ;
+    top: 0;
+    right: 25px;
+    font-size: 36px;
+    margin-left: 50px;
+
+    &:hover{
+      text-decoration: none;
+      cursor: pointer;
+    }
+  }
 
   header {
     display: flex;
@@ -37,6 +49,69 @@
   }
 }
 
+.closePlayer {
+  width: 0;
+  z-index: 1;
+}
+
+.openPlayer {
+  width: 26.5rem;
+  z-index: 3;
+}
+
+
+@media (max-width: 720px) {
+  .playerContainer {
+    height: 100vh;
+    padding: 3rem  4rem;
+    position: fixed;
+    overflow-x: hidden;
+    top: 0;
+    right: 0;
+    transition: 0.5s;
+  
+    background-color: var(--purple-500);
+    color: #FFF;
+  
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+
+    .closeBtn{
+      position: absolute;
+      color: #FFF; ;
+      top: 0;
+      right: 25px;
+      font-size: 36px;
+      margin-left: 50px;
+  
+      &:hover{
+        text-decoration: none;
+        cursor: pointer;
+      }
+    }
+  
+    header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+  
+    strong {
+      font-family: Lexend, sans-serif;
+      font-weight: 600;
+    }
+  
+    footer {
+      align-self: stretch;
+    
+      &.empty {
+        opacity: 0.5;
+      }
+    }
+  }
+}
 
 .openPlayerContainer {
   width: 26.5rem;

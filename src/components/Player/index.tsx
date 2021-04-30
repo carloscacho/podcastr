@@ -1,3 +1,4 @@
+import classNames from 'classnames';
 import Image from 'next/image';
 import React from 'react';
 import { usePlayer } from '../../contexts/PlayerContexts';
@@ -21,15 +22,17 @@ export function Player() {
     toggleLoop,
     isShuffling,
     toggleShuffle,
-    clearPlayerState, 
-    isOpenPlayer
+    clearPlayerState,
+    isOpenPlayer,
+    closePlayer
   } = usePlayer();
 
   const {width} = useWindowDimensions()
   const episode = episodeList[currentEpisodeIndex];
 
   return (
-    <div className={styles.playerContainer}>
+    <div className={`${styles.playerContainer} ${isOpenPlayer ? styles.openPlayer: styles.closePlayer}`}>
+      {width < 720 && <a className={styles.closeBtn} onClick={() => closePlayer()}>×</a>}
       <header>
         <img src="/playing.svg" alt="player tocando agora" />
         <strong>Tocando agora</strong>

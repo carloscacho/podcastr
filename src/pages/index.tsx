@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { GetStaticProps } from "next";
 import Link from "next/link";
 import Image from "next/image";
@@ -9,8 +9,11 @@ import { convertDateToISOString, convertDurationToTimeString } from "../utils/co
 
 import styles from "./home.module.scss";
 import { usePlayer } from "../contexts/PlayerContexts";
-import { Col, Row } from "react-bootstrap";
+import { Card, Col, Container, Row } from "react-bootstrap";
 import useWindowDimensions from "../utils/WindowDimensions";
+import SwitchSelector from "react-switch-selector";
+
+import { BsListUl, BsTable } from "react-icons/bs";
 
 type HomeProps = {
   latestEpisodes: EpisodeType[];
@@ -24,7 +27,28 @@ export default function Home(props: HomeProps) {
   const {playList} = usePlayer();
   const { width } = useWindowDimensions();
 
+  const [isListDisplay, setListDisplay ] = useState(true)
+
  //console.log(props.episodes);
+
+ const options = [
+  {
+      label: <BsTable />,
+      value: "list",
+      selectedBackgroundColor: "#b9b9b9",
+  },
+  {
+      label: <BsListUl />,
+      value: "table",
+      selectedBackgroundColor: "#b9b9b9"
+  }
+];
+
+const onChange = (newValue) => {
+    setListDisplay(newValue === "list");
+};
+
+const initialSelectedIndex = options.findIndex(({value}) => value === "list");
   
   return (
     <div className={styles.homepage}>
@@ -71,8 +95,12 @@ export default function Home(props: HomeProps) {
 
       <section className={styles.allEps}>
         <h2>Todos os episódios </h2>
-        
-        <table>
+        <SwitchSelector
+          onChange={onChange}
+          options={options}
+          initialSelectedIndex={initialSelectedIndex}
+        />
+       {!isListDisplay ? <table>
           <thead>
             <tr>
               <th></th>
@@ -117,6 +145,46 @@ export default function Home(props: HomeProps) {
             })}
           </tbody>
         </table>
+        
+      : 
+      <Container fluid className={styles.allEpsCards}>
+          <Row>
+          {allEpisodes.map((ep, index) => {
+            return (
+              <Col key={ep.id} lg={4} md={6} sm={12}>
+              <Card className={styles.card}>
+                <Card.Img className={styles.cardImg} src={ep.thumbnail} />
+                <Card.Body className={styles.cardBody}>
+                  <Card.Title className={styles.cardTitle}>
+                    <Link href={`/episode/${ep.id}`}>
+                      <a>{ep.title}</a>
+                    </Link>
+                  </Card.Title>
+                  <div>
+                  <Card.Text className={styles.cardText}>
+                    <p style={{width: '60%'}}>{ep.members}</p>
+                    <div className={styles.detailsCard}>
+                      <p>{ep.publishedAt}</p>
+                      <p>{ep.durationAtString}</p>
+                    </div>
+
+                  </Card.Text>
+                  <button 
+                      type="button" 
+                      onClick={() => playList(episodesList, index + latestEpisodes.length)
+                    }>
+                      <img src="/play-green.svg" alt="tocar o podcast"/>
+                    </button>
+                  </div>
+                </Card.Body>
+              </Card>
+            </Col>
+
+            )
+          })}
+          </Row>
+        </Container>
+      }
       </section>
     </div>
   )

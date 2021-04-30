@@ -18,7 +18,8 @@ export default function Episode( {episode}: EpisodeProps ) {
   const { play } = usePlayer();
 
   return (
-    <div className={styles.episode}>
+    <div className={styles.contentDetails}>
+      <div className={styles.episode}>
       <Head>
         <title>Ep: {episode.title}</title>
       </Head>
@@ -52,6 +53,8 @@ export default function Episode( {episode}: EpisodeProps ) {
         dangerouslySetInnerHTML={{__html: episode.description}} 
       />
     </div>
+    </div>
+    
 
   )
 }
