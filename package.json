@@ -1,12 +1,15 @@
 {
   "name": "podcastr",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start -p $PORT",
     "server": "json-server server.json -w -d 750 -p 3333"
+  },
+  "engines": {
+    "node": "14.16.0"
   },
   "dependencies": {
     "@react-icons/all-files": "^4.1.0",
