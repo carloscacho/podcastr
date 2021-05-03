@@ -31,7 +31,7 @@ export default function Home(props: HomeProps) {
 
  //console.log(props.episodes);
 
- const options = [
+const options = [
   {
       label: <BsTable />,
       value: "list",

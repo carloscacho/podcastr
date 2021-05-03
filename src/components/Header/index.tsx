@@ -47,9 +47,9 @@ export function Header() {
     <header className={styles.headerContainer}>
       <Link href="/">
         <a>
-        {theme === 'light' ? 
-        <img src={width < 1088 ? "/logo-small.svg" : "/logo.svg" }  alt="Logo podcastr, imagem de um fone de ouvido"/> :
-        <img src={width < 1088 ? "/logo-small-white.svg" : "/logo-white.svg"} alt="Logo podcastr, imagem de um fone de ouvido"/>
+        {theme === "dark" ? 
+        <img src={width < 1088 ? "/logo-small-white.svg" : "/logo-white.svg" }  alt="Logo podcastr, imagem de um fone de ouvido"/> :
+        <img src={width < 1088 ? "/logo-small.svg" : "/logo.svg"} alt="Logo podcastr, imagem de um fone de ouvido"/>
         }
         </a>
       </Link>

@@ -1,0 +1,26 @@
+.container {
+  background: var(--gray-50);
+  height: calc(100vh - 6.5rem);
+  display: flex;
+  justify-content: center;
+  align-items: baseline;
+  .header{
+    margin: 2rem 1rem;
+  }
+  .selector{
+    margin: 2rem 1rem;
+  }
+  .content {
+    width: auto;
+    margin:auto;
+    .card {
+      max-width: 30rem;
+      padding: 2rem 3rem;
+      background: var(--white);
+      .cardHeader{
+        background: var(--white);
+      }
+    }
+  }
+
+}
