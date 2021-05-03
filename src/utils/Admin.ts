@@ -3,7 +3,7 @@ import { api } from '../services/api';
 
 
 const algorithm = 'aes-256-ctr';
-const secretKey = 'vOVH6sdmpNWjRRIqCc7rdxs01lwHzfr3';
+const secretKeyTransfer = process.env.SECRET_KEY_TRANSFER;
 const iv = crypto.randomBytes(16);
 
 
@@ -74,7 +74,7 @@ export function validadeToken() {
 
 const encrypt = (text) => {
 
-  const cipher = crypto.createCipheriv(algorithm, secretKey, iv);
+  const cipher = crypto.createCipheriv(algorithm, secretKeyTransfer, iv);
 
   const encrypted = Buffer.concat([cipher.update(text), cipher.final()]);
 
