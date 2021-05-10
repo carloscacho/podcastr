@@ -1,6 +1,5 @@
 import { useState } from "react";
-import { Button, Card, Container, Form } from "react-bootstrap";
-import { addUserData } from "../../utils/Admin";
+import { Button, Card, Col, Container, Form, Row } from "react-bootstrap";
 
 import styles from "./style.module.scss";
 
@@ -37,7 +36,7 @@ export function CadPodcast(){
      url,
      duration
     }
-    cleanData()
+    //cleanData()
     // if(addUserData(user)){
     //   console.log("Usuário Cadastrado");
     //   return;
@@ -49,40 +48,15 @@ export function CadPodcast(){
     <Container className={styles.cadContent}>
       <Card className={styles.cadCard}>
         <Form>
-          <Form.Group controlId="formBasicEmail">
-            <Form.Label>Title</Form.Label>
+          <Form.Group controlId="formTitle">
+            <Form.Label>Titulo</Form.Label>
             <Form.Control 
               value={title} 
               onChange={(v) => setTitle(v.target.value)} 
               type="text" placeholder="Digite um titulo" />
           </Form.Group>
 
-          <Form.Group controlId="formBasicEmail">
-            <Form.Label>Membros</Form.Label>
-            <Form.Control 
-              value={members} 
-              onChange={(v) => setMembers(v.target.value)} 
-              type="text" placeholder="Digite os nomes dos membros" />
-          </Form.Group>
-
-          <Form.Group controlId="formBasicEmail">
-            <Form.Label>published_at</Form.Label>
-            <Form.Control 
-              value={published_at} 
-              onChange={(v) => setPublishedAt(v.target.value)} 
-              type="date" placeholder="Digite a data" />
-          </Form.Group>
-
-          <Form.Group controlId="formBasicEmail">
-            <Form.Label>Imagem do Podcast</Form.Label>
-            <Form.Control 
-              value={thumbnail} 
-              onChange={(v) => setThumbnail(v.target.value)} 
-              type="text" placeholder="Digite Nome Completo" />
-          </Form.Group>
-
-
-          <Form.Group controlId="formBasicEmail">
+          <Form.Group controlId="formDescricao">
             <Form.Label>Descrição</Form.Label>
             <Form.Control 
               as="textarea" 
@@ -92,8 +66,26 @@ export function CadPodcast(){
               type="text" placeholder="Digite uma descrição do podcast" />
           </Form.Group>
 
+          <Form.Group controlId="formMembros">
+            <Form.Label>Membros</Form.Label>
+            <Form.Control 
+              value={members} 
+              onChange={(v) => setMembers(v.target.value)} 
+              type="text" placeholder="Digite os nomes dos membros" />
+          </Form.Group>
 
-          <Form.Group controlId="formBasicEmail">
+          <Form.Group controlId="formImagem">
+            <Form.Label>Imagem do Podcast</Form.Label>
+            <Form.Control 
+              value={thumbnail} 
+              onChange={(v) => setThumbnail(v.target.value)} 
+              type="file" placeholder="Digite Nome Completo" />
+          </Form.Group>
+
+
+
+
+          <Form.Group controlId="formURL">
             <Form.Label>URL</Form.Label>
             <Form.Control 
               value={url} 
@@ -102,15 +94,32 @@ export function CadPodcast(){
           </Form.Group>
 
 
-          <Form.Group controlId="formBasicEmail">
-            <Form.Label>Duração</Form.Label>
-            <Form.Control 
-              value={duration}
-              onChange={(v) => setDuration(Number(v.target.value))} 
-              type="number" placeholder="Digite Nome Completo" />
-          </Form.Group>
 
-          <Button variant="primary" type="submit" onClick={Cadastrar}>
+          <Row>
+            <Col sm={12} md={6}>
+              <Form.Group controlId="formPublish">
+                <Form.Label>published_at</Form.Label>
+                <Form.Control 
+                  value={published_at} 
+                  onChange={(v) => setPublishedAt(v.target.value)} 
+                  type="date" placeholder="Digite a data" />
+              </Form.Group>
+            </Col>
+
+            <Col sm={12} md={6}>
+              <Form.Group controlId="formDuracao">
+                <Form.Label>Duração</Form.Label>
+                <Form.Control 
+                  value={duration}
+                  onChange={(v) => setDuration(Number(v.target.value))} 
+                  type="number" placeholder="Digite Nome Completo" />
+              </Form.Group>
+            </Col>
+          </Row>
+
+
+
+          <Button variant="primary" onClick={Cadastrar}>
             Cadastrar
           </Button>
         </Form>

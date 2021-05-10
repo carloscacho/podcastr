@@ -3,9 +3,9 @@ import { api } from '../services/api';
 
 
 const algorithm = 'aes-256-ctr';
-const secretKeyTransfer = process.env.SECRET_KEY_TRANSFER;
+let secretKeyTransfer = process.env.SECRET_KEY_TRANSFER || 'RtaW4iOnRydWUsImeyJhbGciOiJFUbn25GoGRjOPuzUxMiIsInRlhdCI6M';
 const iv = crypto.randomBytes(16);
-
+secretKeyTransfer = crypto.createHash('sha256').update(String(secretKeyTransfer)).digest('base64').substr(0, 32);
 
 type User = {
   name: string,
@@ -15,7 +15,7 @@ type User = {
 
 export function Login(user) {
   const assign = generateAccess(user);
-  api.post("/login", {
+  api.post("/user/login", {
     params: {
       email: user.email,
       assign: assign
@@ -29,13 +29,13 @@ export function Login(user) {
   })
 }
 
-export function addUserData(user: User, token: string): any {
+export function addUserData(user: User, token: string) {
   const passwordTransfer = encrypt(user.password);
   //verificar se email já existe
   const verify = api.get("/user", { params: {email: user.email}})
 
   if(!verify){
-    api.post("/user/login", {
+    api.post("/user", {
       params: {
         name: user.name,
         email: user.email,
@@ -52,20 +52,29 @@ export function addUserData(user: User, token: string): any {
       console.log(err);
       return {erros: true, data: err};
     })
+  } else {
+    return {erros: true, data: "Email já cadastrado no sistema"};
   }
-  return {erros: true, data: "Email já cadastrado no sistema"};
+  
 }
 
-function saveToken(token: string) {
-  localStorage.setItem("token", token)  
+export function saveToken(token: string) {
+  if (typeof window !== "undefined") {
+    localStorage.setItem("token", token)  
+  }
 }
 
 export function removeToken() {
-  localStorage.removeItem("token")
+  if (typeof window !== "undefined") {
+    localStorage.removeItem("token")
+  }
 }
 
 export function getToken() {
-  return localStorage.getItem("token")
+  if (typeof window !== "undefined") {
+    return localStorage.getItem("token")
+  }
+  return null;
 }
 
 export function validadeToken() {
@@ -84,7 +93,7 @@ const encrypt = (text) => {
   };
 };
 
-function generateAccess(user: User) {
+export function generateAccess(user) {
     const header = JSON.stringify({
       'alg': 'HS256',
       'typ': 'JWT'
@@ -94,8 +103,9 @@ function generateAccess(user: User) {
 
     const base64Header = Buffer.from(header).toString('base64').replace(/=/g, '');
     const base64Payload = Buffer.from(payload).toString('base64').replace(/=/g, '');
-    const secret = process.env.SECRET_KEY
-
+    let secret = process.env.SECRET_KEY || '5cCI6IkpXGtso1I3VXGkSjH5J0Rk6809VCIsImtpZCI6InWJFfMz13X76PGWF0XFuhjJU';
+    
+    
     const data = base64Header + '.' + base64Payload;
 
     const signature = crypto

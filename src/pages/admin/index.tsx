@@ -1,12 +1,13 @@
 import { useTheme } from 'next-themes';
 import Image from 'next/image';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Button, Card, Container, Form } from 'react-bootstrap';
 import { BsPlay, BsPersonPlus } from 'react-icons/bs';
 import SwitchSelector from 'react-switch-selector';
 import { CadPodcast } from '../../components/Cadastro/CadPodcast';
 import { CadUsuario } from '../../components/Cadastro/CadUsuario';
-import { Login } from '../../utils/Admin';
+import { api } from '../../services/api';
+import { generateAccess, getToken, removeToken, saveToken } from '../../utils/Admin';
 import { alertShow } from '../../utils/Alerts';
 
 import styles from './admin.module.scss';
@@ -27,7 +28,8 @@ const options = [
 
 export default function AdminPage() {
 
-  const [isLogged, setIsLogged] = useState(true);
+  const [isLogged, setIsLogged] = useState(false);
+  const [inLogin, setInLogin] = useState(false);
   const [isCadUser, setIsCadUser] = useState(false);
   const [showError, setShowError] = useState(false);
   const { theme } = useTheme()
@@ -44,13 +46,54 @@ export default function AdminPage() {
     setIsCadUser(select == "cadUsuario");
   }
 
-  function onLogin(){
-    const user = {email, password}
-    if(Login(user) != null){
-      setIsLogged(true);
+  useEffect(() => {
+    async function onLogin(){
+      const user = {email, password}
+      const assign = generateAccess(user);
+      try{
+        const { data } = await api.post("/user/login", {
+          params: {
+            email: user.email,
+            assign: assign
+          }
+        })
+
+        if(data?.auth) {
+          saveToken(data.token)
+          setIsLogged(true)
+        } else {
+          setShowError(true);
+          setInLogin(false)
+          cleanData()
+        }
+      } catch (error) {
+        console.log(error);
+        setShowError(true);
+        setInLogin(false)
+        cleanData()
+      }
+      
     }
-    setShowError(true);
-    cleanData()
+    inLogin && onLogin();
+  }, [inLogin]);
+
+  useEffect(() => {
+    const tk = getToken();
+    if(tk != null){
+      setIsLogged(true)
+    }
+  },[])
+
+  useEffect(() => {
+    function showErrorMsg(){
+      setTimeout(() => setShowError(false), 3000)
+    }
+    showError && showErrorMsg();
+  },[showError])
+
+  function logout(){
+    removeToken();
+    setIsLogged(false);
   }
 
   return(
@@ -82,17 +125,23 @@ export default function AdminPage() {
                   type="password" placeholder="Password" />
                 </Form.Group>
 
-                <Button variant="primary" type="submit" onClick={() => onLogin()}>
+                <Button variant="primary" onClick={() => setInLogin(true)}>
                   Entrar
                 </Button>
               </Form>
             </Card.Body>
           </Card>
-          {showError && alertShow("error", "email ou senha incorretos")}
+          {showError && alertShow("danger", "email ou senha incorretos")}
         </Container>
       : 
       <div>
-        <h2 className={styles.header}>Admin Page</h2>
+        <div className={styles.adminHeader}>
+          <h2 className={styles.header}>Admin Page</h2>
+          <button onClick={() => logout()}>
+            Sair
+          </button>
+        </div>
+        
         <div className={styles.selector}> 
           <SwitchSelector 
             onChange={onChangeCad}

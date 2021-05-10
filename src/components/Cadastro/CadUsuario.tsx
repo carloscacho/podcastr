@@ -28,12 +28,13 @@ export function CadUsuario(){
     cleanData()
     const token = getToken()
     const response = addUserData(user, token);
-    if(!response.error){
+    if(!response?.erros){
       setShowSuccess(true)
-      console.log(response.data);
+      console.log(response?.data);
       setTimeout(() => setShowSuccess(false), 3000)
       return;
     }
+    console.log(response?.data);
     setErrorMsg(response.data)
     setShowError(true)
     setTimeout(() => {setShowError(false); setErrorMsg("")}, 3000);
@@ -46,7 +47,7 @@ export function CadUsuario(){
     <Container className={styles.cadContent}>
       <Card className={styles.cadCard}>
         <Form>
-          <Form.Group controlId="formBasicEmail">
+          <Form.Group controlId="formNome">
             <Form.Label>Nome</Form.Label>
             <Form.Control 
               value={name} 
@@ -54,7 +55,7 @@ export function CadUsuario(){
               type="text" placeholder="Digite Nome Completo" />
           </Form.Group>
 
-          <Form.Group controlId="formBasicEmail">
+          <Form.Group controlId="formEmail">
             <Form.Label>Email</Form.Label>
             <Form.Control
               value={email} 
@@ -62,14 +63,14 @@ export function CadUsuario(){
               type="email" placeholder="Digite email" />
           </Form.Group>
 
-          <Form.Group controlId="formBasicPassword">
+          <Form.Group controlId="formPassword">
             <Form.Label>Senha</Form.Label>
             <Form.Control 
               value={password} 
               onChange={(v) => setPassword(v.target.value)}  
               type="password" placeholder="Digite uma Senha" />
           </Form.Group>
-          <Button variant="primary" type="submit" onClick={Cadastrar}>
+          <Button variant="primary" onClick={() => Cadastrar()}>
             Cadastrar
           </Button>
         </Form>
