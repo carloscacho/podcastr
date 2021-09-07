@@ -28,4 +28,22 @@ npm run start
 ```
 ## Imagens do frontend
 Tela inicial
-![Tela inicial do player](./prints/podcastr-player-open.png)
+![imagem da Tela inicial do player](./prints/podcastr-player-open.png)
+
+
+Tela Inicial com player recolhido
+![imagem Tela Inicial com player recolhido](./prints/podcastr-player-close.png)
+
+
+Tela Inicial com player tocando um podcast
+![imagem Tela Inicial com player tocando um podcast](./prints/podcastr-play.png)
+
+
+Tela Inicial com player tocando um podcast em darkmode
+![imagem Tela Inicial com player tocando um podcast em darkmode](./prints/podcastr-play-darkmode.png)
+
+
+Tela de detalhe de uma posdcast
+![imagem Tela de detalhe de uma posdcast](./prints/podcastr-details.png)
+
+para mais detalhes acesse a demostração
